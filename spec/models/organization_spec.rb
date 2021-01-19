@@ -52,4 +52,12 @@ RSpec.describe Organization, type: :model do
     expect(organization).to  respond_to(:transportation)
   end
 
+  it 'has all agreements' do
+    agreements = [:agreement_one, :agreement_two, :agreement_three, :agreement_four, :agreement_five, :agreement_six, :agreement_seven, :agreement_eight]
+    
+    for agreement in agreements do
+      expect(organization).to respond_to(agreement)
+    end   
+
+  end
 end
