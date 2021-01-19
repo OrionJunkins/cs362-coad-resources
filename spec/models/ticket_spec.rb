@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
-  it 'exists' do 
-    ticket = Ticket.new
+  let(:ticket) do 
+    Ticket.new
   end
+
+  it 'exists' do 
+    ticket
+  end
+
 end
+
