@@ -1,3 +1,5 @@
+# Every ticket is associated with a location described by its 'region'
+# Tickets can be searched by region, showing every ticket listed in that area
 class Region < ApplicationRecord
 
   has_many :tickets

@@ -1,3 +1,4 @@
+# Categories may be associated with a ticket or with an organization
 class ResourceCategory < ApplicationRecord
 
   has_and_belongs_to_many :organizations

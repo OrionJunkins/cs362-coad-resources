@@ -1,3 +1,4 @@
+# Account for a user of the site
 class User < ApplicationRecord
 
   enum role: [:admin, :organization]

@@ -1,3 +1,4 @@
+# A single request for aid. Lots of attributes.
 class Ticket < ApplicationRecord
 
   belongs_to :region
