@@ -13,9 +13,4 @@ RSpec.describe User, type: :model do
     expect(user).to respond_to(:email)
   end
 
-  it 'has a password' do
-    expect(user).to respond_to(:password)
-  end
-
-
 end

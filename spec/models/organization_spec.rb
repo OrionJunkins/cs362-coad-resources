@@ -4,21 +4,32 @@ RSpec.describe Organization, type: :model do
   let (:organization) do 
     Organization.new
   end
-
-  it 'has an email' do
-    expect(organization).to respond_to(:email)
-  end
-
   it 'has a name' do
     expect(organization).to respond_to(:name)
+  end
+
+  it 'has a status' do
+    expect(organization).to respond_to(:status)
   end
 
   it 'has a phone' do
     expect(organization).to  respond_to(:phone)
   end
 
-  it 'has a status' do
-    expect(organization).to  respond_to(:status)
+  it 'has an email' do
+    expect(organization).to respond_to(:email)
+  end
+
+  it 'has a description' do
+    expect(organization).to  respond_to(:description)
+  end
+
+  it 'has a rejection_reason' do
+    expect(organization).to  respond_to(:rejection_reason)
+  end
+  
+  it 'has liability_insurance' do
+    expect(organization).to  respond_to(:liability_insurance)
   end
 
   it 'has a primary name' do
@@ -31,6 +42,14 @@ RSpec.describe Organization, type: :model do
 
   it 'has a secondary phone' do
     expect(organization).to  respond_to(:secondary_phone)
+  end
+
+  it 'has a title' do
+    expect(organization).to  respond_to(:title)
+  end
+
+  it 'has transportation' do
+    expect(organization).to  respond_to(:transportation)
   end
 
 end
