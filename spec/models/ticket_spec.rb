@@ -37,5 +37,4 @@ RSpec.describe Ticket, type: :model do
     expect(ticket).to respond_to(:region_id)
   end
 
-  
 end

@@ -13,7 +13,7 @@ class Organization < ApplicationRecord
   has_and_belongs_to_many :resource_categories
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates_presence_of :email, :name, :phone, :status, :primary_name, :secondary_name, :secondary_phone
+  validates_presence_of :email, :name, :phone, :status, :primary_name, :secondary_name,  :secondary_phone
   validates_length_of :email, minimum: 1, maximum: 255, on: :create
   validates :email, format: { with: VALID_EMAIL_REGEX }
   validates_uniqueness_of :email, case_sensitive: false
