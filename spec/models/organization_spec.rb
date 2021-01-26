@@ -94,9 +94,9 @@ RSpec.describe Organization, type: :model do
       should have_many(:tickets)
     end
 
-    #it 'has and belongs to many resource categories' do
-     # should have_and_belongs_to_many(:resource_categories).optional #Optional?
-    #end
+    it 'has and belongs to many resource categories' do
+      should have_and_belong_to_many(:resource_categories)
+    end
 
   end
 
@@ -109,7 +109,7 @@ RSpec.describe Organization, type: :model do
     it 'status can be approved' do
       organization.set_default_status
       organization.approve
-      expect(organization.status).to eq("approved") #why is this a string? Why not :approved?
+      expect(organization.status).to eq("approved")
     end
 
     it 'status can be rejected' do
