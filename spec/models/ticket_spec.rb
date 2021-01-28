@@ -44,14 +44,15 @@ RSpec.describe Ticket, type: :model do
   describe 'validation behavior:' do
 
     it { should validate_presence_of(:name) } 
-    it { should validate_length_of(:name).is_at_least(1) } 
-    it { should validate_length_of(:name).is_at_most(255) }
-
+    it { should validate_length_of(:name).is_at_least(1).on(:create) } 
+    it { should validate_length_of(:name).is_at_most(255).on(:create) }
     it { should validate_presence_of(:phone) }
-    it { should validate_presence_of(:region_id) }  
-    it { should validate_presence_of(:resource_category_id) } 
 
-    it { should validate_length_of(:description).is_at_most(1020) }
+    it { should validate_length_of(:description).is_at_most(1020).on(:create) }
+    it 'has a valid phone number' do 
+      ticket.phone = '+41 44 111 22 33'
+      expect(ticket.phony_plausible).to be_truthy
+    end
 
   end
 
@@ -79,14 +80,17 @@ RSpec.describe Ticket, type: :model do
       expect(str_rep).to eq(name)
     end
 
-    it 'can be queried to see if it is open' do 
+    it 'can be queried to see if it is open or closed' do 
       tic = Ticket.new(closed: true)
       expect(tic.open?).to be_falsey
+      tic.closed = false
+      expect(tic.open?).to be_truthy
     end
 
     it 'can be queried to see if it has an organization' do 
-      #tic = Ticket.new(captured: true)
-      #expect(tic.captured?).to be_truthy
+      expect(ticket.captured?).to be_falsey
+      ticket.organization = Organization.new
+      expect(ticket.captured?).to be_truthy
     end
 
   end

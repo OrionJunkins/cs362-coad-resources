@@ -57,14 +57,15 @@ RSpec.describe ResourceCategory, type: :model do
     it 'can be activated' do 
       rc = ResourceCategory.new(active: false);
       rc.activate
-      expect(rc.inactive?).to be_falsey
+      expect(rc.active).to be_truthy
     end
 
     it 'can be deactivated' do 
       rc = ResourceCategory.new(active: true);
       rc.deactivate
-      expect(rc.inactive?).to be_truthy
+      expect(rc.active).to be_falsey
     end
+
   end
 
 
