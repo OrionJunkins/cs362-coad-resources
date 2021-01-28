@@ -45,10 +45,26 @@ RSpec.describe ResourceCategory, type: :model do
       expect(str_rep).to eq(name)
     end
 
-    it 'unspecified resource category exists upon search' do 
+    it 'can have an unspecified resource category' do 
       expect(ResourceCategory.unspecified.to_s). to eq('Unspecified')
     end
 
+    it 'has an inactive? method that gives state' do
+      rc = ResourceCategory.new(active: false);
+      expect(rc.inactive?).to be_truthy
+    end
+
+    it 'can be activated' do 
+      rc = ResourceCategory.new(active: false);
+      rc.activate
+      expect(rc.inactive?).to be_falsey
+    end
+
+    it 'can be deactivated' do 
+      rc = ResourceCategory.new(active: true);
+      rc.deactivate
+      expect(rc.inactive?).to be_truthy
+    end
   end
 
 
