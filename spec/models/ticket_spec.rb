@@ -49,9 +49,20 @@ RSpec.describe Ticket, type: :model do
     it { should validate_presence_of(:phone) }
 
     it { should validate_length_of(:description).is_at_most(1020).on(:create) }
+
     it 'has a valid phone number' do 
+      #TODO extract to factory
       ticket.phone = '+41 44 111 22 33'
-      expect(ticket.phony_plausible).to be_truthy
+      ticket.name = 'ticket'
+      ticket.description = 'this is a ticket'
+      ticket.region = Region.create(name: "Fake Region") 
+      ticket.organization = Organization.create(name: "Fake Org", email: "test@test.com")
+      ticket.resource_category = ResourceCategory.create(name: "Fake RC")
+
+      expect(ticket.valid?).to be_truthy
+
+      ticket.phone = 'kittens'
+      expect(ticket.valid?).to be_falsey
     end
 
   end
