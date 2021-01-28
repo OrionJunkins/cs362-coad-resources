@@ -32,7 +32,7 @@ RSpec.describe Region, type: :model do
       name = "Fake name"
       region.name = name
       str_rep = region.to_s
-      expect(str_rep). to eq(name)
+      expect(str_rep).to eq(name)
     end
 
     it 'unspecified region exists upon search' do 

@@ -28,7 +28,7 @@ class Ticket < ApplicationRecord
   end
 
   def to_s
-    "Ticket #{id}"
+    "Ticket #{id}" # ticket ID?
   end
 
 end
