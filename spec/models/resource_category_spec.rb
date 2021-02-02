@@ -68,6 +68,11 @@ RSpec.describe ResourceCategory, type: :model do
 
   end
 
-
-  
+  describe 'scopes:' do 
+    it 'gives active RCs with no inactive ones' do
+      rc = ResourceCategory.create(name:"Fake", active: true) #TODO Replace with factory
+      expect(ResourceCategory.active.include?(rc)).to be_truthy
+      expect(ResourceCategory.inactive.include?(rc)).to be_falsey
+    end
+  end
 end
