@@ -105,5 +105,7 @@ RSpec.describe Ticket, type: :model do
     end
 
   end
-
+  it 'works' do 
+    build(:ticket)
+  end
 end
