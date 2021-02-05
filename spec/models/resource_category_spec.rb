@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ResourceCategory, type: :model do
 
   let (:resource_category) do
-    ResourceCategory.new 
+    build(:resource_category)
   end
 
 
@@ -39,8 +39,7 @@ RSpec.describe ResourceCategory, type: :model do
   describe 'behavior:' do 
 
     it 'has a string representation of its name' do
-      name = "Fake name"
-      resource_category.name = name
+      name = resource_category.name
       str_rep = resource_category.to_s
       expect(str_rep).to eq(name)
     end
@@ -50,20 +49,20 @@ RSpec.describe ResourceCategory, type: :model do
     end
 
     it 'has an inactive? method that gives state' do
-      rc = ResourceCategory.new(active: false);
-      expect(rc.inactive?).to be_truthy
+      resource_category.active = false
+      expect(resource_category.inactive?).to be_truthy
     end
 
     it 'can be activated' do 
-      rc = ResourceCategory.new(active: false);
-      rc.activate
-      expect(rc.active).to be_truthy
+      resource_category.active = false
+      resource_category.activate
+      expect(resource_category.active).to be_truthy
     end
 
     it 'can be deactivated' do 
-      rc = ResourceCategory.new(active: true);
-      rc.deactivate
-      expect(rc.active).to be_falsey
+      resource_category.active = true
+      resource_category.deactivate
+      expect(resource_category.active).to be_falsey
     end
 
   end
