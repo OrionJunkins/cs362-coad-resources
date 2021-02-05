@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Region, type: :model do
   let (:region) do
-    Region.new 
+    build(:region)
   end
   
   describe 'attributes:' do
@@ -30,8 +30,7 @@ RSpec.describe Region, type: :model do
   describe 'behavior:' do 
 
     it 'has a string representation of its name' do
-      name = "Fake name"
-      region.name = name
+      name = region.name
       str_rep = region.to_s
       expect(str_rep).to eq(name)
     end
