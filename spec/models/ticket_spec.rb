@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
   let(:ticket) do 
-    Ticket.new
+    create(:ticket)
   end
 
   describe 'attributes:' do
@@ -50,17 +50,8 @@ RSpec.describe Ticket, type: :model do
 
     it { should validate_length_of(:description).is_at_most(1020).on(:create) }
 
-    it 'has a valid phone number' do 
-      #TODO extract to factory
-      ticket.phone = '+41 44 111 22 33'
-      ticket.name = 'ticket'
-      ticket.description = 'this is a ticket'
-      ticket.region = Region.create(name: "Fake Region") 
-      ticket.organization = Organization.create(name: "Fake Org", email: "test@test.com")
-      ticket.resource_category = ResourceCategory.create(name: "Fake RC")
-
+    it 'is invalid without a valid phone number' do 
       expect(ticket.valid?).to be_truthy
-
       ticket.phone = 'kittens'
       expect(ticket.valid?).to be_falsey
     end
@@ -85,17 +76,16 @@ RSpec.describe Ticket, type: :model do
   describe 'behavior:' do 
 
     it 'has a string representation of its name' do
-      name = "Ticket 1"
-      ticket.id = 1
+      ticket_string = "Ticket #{ticket.id}"
       str_rep = ticket.to_s
-      expect(str_rep).to eq(name)
+      expect(str_rep).to eq(ticket_string)
     end
 
     it 'can be queried to see if it is open or closed' do 
-      tic = Ticket.new(closed: true)
-      expect(tic.open?).to be_falsey
-      tic.closed = false
-      expect(tic.open?).to be_truthy
+      ticket.closed = true
+      expect(ticket.open?).to be_falsey
+      ticket.closed = false
+      expect(ticket.open?).to be_truthy
     end
 
     it 'can be queried to see if it has an organization' do 
@@ -105,7 +95,5 @@ RSpec.describe Ticket, type: :model do
     end
 
   end
-  it 'works' do 
-    build(:ticket)
-  end
+
 end
