@@ -2,7 +2,7 @@ require 'rails_helper'
 VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 RSpec.describe User, type: :model do
   let (:user) do
-    User.new
+    build(:user)
   end
 
   describe 'attributes:' do
@@ -39,10 +39,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'behavior:' do 
-    it 'has a string representation of its name' do
-      email = "user@domain.com"
-      user = User.new(email: email)
-      expect(user.to_s).to eq(email)
+    it 'has a string representation of its email' do
+      expect(user.to_s).to eq(user.email)
     end
 
     it 'has a role that defaults to organization' do 
@@ -50,7 +48,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'does not let set_default reassign role if one exists' do 
-      user = User.new(role: 'admin')
+      user.role = 'admin'
       expect(user.role).to eq("admin")
       user.set_default_role
       expect(user.role).to eq("admin")
