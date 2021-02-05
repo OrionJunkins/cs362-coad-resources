@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
   let (:organization) do 
-    Organization.new
+    build(:organization)
   end
 
   describe 'attributes:' do
@@ -101,25 +101,25 @@ RSpec.describe Organization, type: :model do
 
   describe 'behavior:' do 
     it 'status can be set to default' do
-      organization.set_default_status
-      expect(organization.status).to eq("submitted")
+      blank_org = Organization.new
+      blank_org.set_default_status
+      expect(blank_org.status).to eq("submitted")
     end
     
     it 'status can be approved' do
-      organization.set_default_status
+      organization.status = :rejected
       organization.approve
       expect(organization.status).to eq("approved")
     end
 
     it 'status can be rejected' do
-      organization.set_default_status
+      organization.status = :approved
       organization.reject
       expect(organization.status).to eq("rejected")
     end
 
     it 'has a string representation of its name' do
-      name = "Fake name"
-      organization.name = name
+      name = organization.name
       str_rep = organization.to_s
       expect(str_rep). to eq(name)
     end
