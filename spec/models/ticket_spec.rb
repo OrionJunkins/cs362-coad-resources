@@ -50,7 +50,7 @@ RSpec.describe Ticket, type: :model do
 
     it { should validate_length_of(:description).is_at_most(1020).on(:create) }
 
-    it 'is invalid without a valid phone number' do 
+    it 'is invalid without a valid phone number' do
       expect(ticket.valid?).to be_truthy
       ticket.phone = 'kittens'
       expect(ticket.valid?).to be_falsey
@@ -93,6 +93,87 @@ RSpec.describe Ticket, type: :model do
       ticket.organization = Organization.new
       expect(ticket.captured?).to be_truthy
     end
+
+  end
+
+  describe 'scopes: ' do
+    describe 'closed' do 
+      let(:closed_ticket) do
+        create(:ticket, :closed)
+      end
+
+      let(:open_ticket) do
+        create(:ticket, :open)
+      end
+
+      it 'includes closed tickets' do
+        expect(Ticket.closed).to include(closed_ticket)
+      end
+
+      it 'does not include open tickets' do
+        expect(Ticket.closed).to_not include(open_ticket)
+      end
+
+    end
+
+    describe 'open' do 
+      let(:closed_ticket) do
+        create(:ticket, :closed)
+      end
+      
+      let(:open_ticket) do
+        create(:ticket, :open)
+      end
+
+      it 'includes open tickets' do
+        expect(Ticket.open).to include(open_ticket)
+      end
+
+      it 'does not include closed tickets' do
+        expect(Ticket.open).to_not include(closed_ticket)
+      end
+
+    end
+
+
+
+    describe 'all_organization' do 
+      let(:ticket_without_org) do
+        create(:ticket)
+      end
+      let(:ticket_with_org) do
+        build(:ticket)
+        ticket.organization = create(:organization)
+        ticket.save
+      end
+
+      it 'includes open tickets with an organization' do
+        #expect(Ticket.all_organization).to include(ticket_with_org)
+      end
+
+      it 'does not include a closed ticket' do 
+      end
+
+      it 'does not include a ticket without an organization' do
+      end
+    end
+
+
+    describe 'organization' do
+      before do
+        organization1 = create(:organization)
+        ticket1 = build(:ticket)
+        ticket1.organization = organization1
+        ticket1.save
+
+      end
+
+      it 'includes tickets with the correct organization_id' do
+        #expect Ticket.organization(organization1.id).to include(ticket1)
+      end
+
+    end
+
 
   end
 

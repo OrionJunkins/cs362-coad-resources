@@ -7,5 +7,15 @@ FactoryBot.define do
     closed_at { nil }
     region
     resource_category
+
+    trait :closed do
+      closed {true}
+    end
+
+    trait :open do
+      closed {false}
+    end
+
   end
+
 end
