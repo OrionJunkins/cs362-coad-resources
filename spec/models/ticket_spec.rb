@@ -41,6 +41,7 @@ RSpec.describe Ticket, type: :model do
 
   end
 
+
   describe 'validation behavior:' do
 
     it { should validate_presence_of(:name) } 
@@ -58,6 +59,7 @@ RSpec.describe Ticket, type: :model do
 
   end
 
+
   describe 'associations:' do
     it 'belongs to a region' do
       should belong_to(:region)
@@ -72,6 +74,7 @@ RSpec.describe Ticket, type: :model do
     end
 
   end
+
 
   describe 'behavior:' do 
 
@@ -96,7 +99,9 @@ RSpec.describe Ticket, type: :model do
 
   end
 
+  
   describe 'scopes: ' do
+
     describe 'closed' do 
       let(:closed_ticket) do
         create(:ticket, :closed)
@@ -135,8 +140,6 @@ RSpec.describe Ticket, type: :model do
 
     end
 
-
-
     describe 'all_organization' do 
 
       it 'includes open tickets with an organization' do
@@ -157,7 +160,6 @@ RSpec.describe Ticket, type: :model do
       end
 
     end
-
 
     describe 'organization' do
 
@@ -199,13 +201,11 @@ RSpec.describe Ticket, type: :model do
 
     describe 'region' do
       it 'returns a ticket if queried for that regions id' do
-        ticket = create(:ticket)
         region = ticket.region
         expect(Ticket.region(region.id)).to include(ticket)
       end
 
       it 'does not return a ticket wit a different id' do
-        ticket = create(:ticket)
         region = ticket.region
 
         other_ticket = build(:ticket, name: 'Distinct Region Fake Ticket')
@@ -217,11 +217,24 @@ RSpec.describe Ticket, type: :model do
 
     end
 
-    describe 'organization' do
-      
+    describe 'resource_category' do
+      it 'returns a ticket with a matching resource_category' do
+        resource_category = ticket.resource_category
+        expect(Ticket.resource_category(resource_category.id)).to include(ticket)
+      end
+
+      it 'does not return a ticket with a different resource_category' do
+        resource_category = ticket.resource_category
+
+        other_ticket = build(:ticket, name: 'Distinct RC Fake Ticket')
+        other_ticket.resource_category = create(:resource_category, name: "Other Fake RC")
+        other_ticket.save
+
+        expect(Ticket.resource_category(resource_category.id)).to_not include(other_ticket)
+      end
+
     end
 
-
   end
-
+  
 end
