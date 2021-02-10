@@ -138,40 +138,87 @@ RSpec.describe Ticket, type: :model do
 
 
     describe 'all_organization' do 
-      let(:ticket_without_org) do
-        create(:ticket)
-      end
-      let(:ticket_with_org) do
-        build(:ticket)
-        ticket.organization = create(:organization)
-        ticket.save
-      end
 
       it 'includes open tickets with an organization' do
-        #expect(Ticket.all_organization).to include(ticket_with_org)
+        captured_ticket = create(:ticket, :captured)
+        captured_ticket.closed = false
+        expect(Ticket.all_organization).to include(captured_ticket)
       end
 
-      it 'does not include a closed ticket' do 
+      it 'returns not include a closed ticket' do 
+        captured_ticket = create(:ticket, :captured, closed: true)
+        expect(Ticket.all_organization).to_not include(captured_ticket)
       end
 
-      it 'does not include a ticket without an organization' do
+      it 'does not return a ticket without an organization' do
+        ticket = create(:ticket, organization: nil, name: 'New Fake Ticket')
+        ticket.closed = false
+        expect(Ticket.all_organization).to_not include(ticket)
       end
+
     end
 
 
     describe 'organization' do
-      before do
-        organization1 = create(:organization)
-        ticket1 = build(:ticket)
-        ticket1.organization = organization1
-        ticket1.save
 
+      it 'returns tickets with the correct organization_id' do
+        captured_ticket = create(:ticket, :captured)
+        organization_id = captured_ticket.organization_id
+        expect(Ticket.organization(organization_id)).to include(captured_ticket)
       end
 
-      it 'includes tickets with the correct organization_id' do
-        #expect Ticket.organization(organization1.id).to include(ticket1)
+      it 'does not return tickets with the incorrect organization_id' do
+        captured_ticket = create(:ticket, :captured)
+        organization = captured_ticket.organization
+
+        other_ticket = build(:ticket, :captured, name: "Other Fake Ticket")
+        other_ticket.organization = create(:organization, name: 'New Fake Organization', email: "other@example.com") #TODO: Improve -> extract to factory?
+        
+        expect(Ticket.organization(organization.id)).to_not include(other_ticket)
       end
 
+    end
+
+    describe 'closed_organization' do
+      
+      it 'returns a closed, captured ticket' do
+        captured_ticket = create(:ticket, :captured, closed: true)
+        organization_id = captured_ticket.organization.id
+
+        expect(Ticket.closed_organization(organization_id)).to include(captured_ticket)
+      end
+
+      it 'does not return an open ticket' do
+        captured_ticket = create(:ticket, :captured, closed: false)
+        organization_id = captured_ticket.organization.id
+
+        expect(Ticket.closed_organization(organization_id)).to_not include(captured_ticket)
+      end
+
+    end
+
+    describe 'region' do
+      it 'returns a ticket if queried for that regions id' do
+        ticket = create(:ticket)
+        region = ticket.region
+        expect(Ticket.region(region.id)).to include(ticket)
+      end
+
+      it 'does not return a ticket wit a different id' do
+        ticket = create(:ticket)
+        region = ticket.region
+
+        other_ticket = build(:ticket, name: 'Distinct Region Fake Ticket')
+        other_ticket.region = create(:region, name: 'Other Fake Region')
+        other_ticket.save
+
+        expect(Ticket.region(region.id)).to include(ticket)
+      end
+
+    end
+
+    describe 'organization' do
+      
     end
 
 

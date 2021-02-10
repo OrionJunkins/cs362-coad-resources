@@ -11,7 +11,7 @@ class Ticket < ApplicationRecord
   validates :phone, phony_plausible: true
 
   scope :open, -> () { where closed: false, organization_id: nil }
-  scope :closed, -> () { where closed: true }
+  scope :closed, -> { where closed: true }
   scope :all_organization, -> () { where(closed: false).where.not(organization_id: nil) }
   scope :organization, -> (organization_id) { where(organization_id: organization_id, closed: false) }
   scope :closed_organization, -> (organization_id) { where(organization_id: organization_id, closed: true) }

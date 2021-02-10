@@ -8,6 +8,10 @@ FactoryBot.define do
     region
     resource_category
 
+    trait :captured do
+      organization
+    end
+
     trait :closed do
       closed {true}
     end
