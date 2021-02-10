@@ -28,6 +28,7 @@ RSpec.describe ResourceCategory, type: :model do
     it { should validate_uniqueness_of(:name).case_insensitive } 
   end
 
+
   describe 'associations:' do
 
     it 'has many tickets' do
@@ -35,6 +36,7 @@ RSpec.describe ResourceCategory, type: :model do
     end
 
   end
+
 
   describe 'behavior:' do 
 
@@ -67,11 +69,37 @@ RSpec.describe ResourceCategory, type: :model do
 
   end
 
+
   describe 'scopes:' do 
-    it 'gives active RCs with no inactive ones' do
-      rc = ResourceCategory.create(name:"Fake", active: true) #TODO Replace with factory
-      expect(ResourceCategory.active.include?(rc)).to be_truthy
-      expect(ResourceCategory.inactive.include?(rc)).to be_falsey
+
+    describe 'active' do
+
+      it 'returns an active resource category' do
+        rc = create(:resource_category, active: true)
+        expect(ResourceCategory.active.include?(rc)).to be_truthy
+      end
+
+      it 'does not return an inactive resource category' do
+        rc = create(:resource_category, active: false)
+        expect(ResourceCategory.active.include?(rc)).to be_falsey
+      end
+      
     end
+
+    describe 'inactive' do
+
+      it 'returns an inactive resource category' do
+        rc = create(:resource_category, active: false)
+        expect(ResourceCategory.inactive.include?(rc)).to be_truthy
+      end
+
+      it 'does not return an active resource category' do
+        rc = create(:resource_category, active: true)
+        expect(ResourceCategory.inactive.include?(rc)).to be_falsey
+      end
+
+    end
+
   end
+
 end
