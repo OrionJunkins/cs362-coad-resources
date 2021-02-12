@@ -1,11 +1,20 @@
 FactoryBot.define do 
   factory :user do 
-    email {"user@example.com"}
+    sequence(:email) { |i| "user#{i}@example.com" }
+    password {'password'}
+    password_confirmation {'password'}
     encrypted_password {'password'}
-    reset_password_token {'reset_token'}
-    confirmation_token {'confirm_token'}
+    reset_password_token {'token'}
+    confirmation_token {'token'}
     unconfirmed_email {'unconfirmed@example.com'}
     role {1}
-    organization
+  end
+
+  trait :organization do
+    role {'organization'}
+  end
+  
+  trait :admin do
+    role {'admin'}
   end
 end
