@@ -3,35 +3,32 @@ require 'rails_helper'
 RSpec.describe RegionsController, type: :controller do
 
   context 'unauthenticated users' do
-    describe '#index' do
-      it 'redirects to the sign_in screen' do
-        get :index          
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
+    it 'redirects to the sign_in screen' do
+      get :index          
+      expect(response).to redirect_to(new_user_session_path)
 
-    describe '#show' do
-      it 'rediects to the sign_in screen' do
-        get :show, params: {id: 'fake'}
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
+      get :show, params: {id: 'fake'}
+      expect(response).to redirect_to(new_user_session_path)
 
-    describe '#new' do
-      it 'rediects to the sign_in screen' do
-        get :new
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-    
-  describe '#create' do
-      it 'redirects to the sign_in screen' do
-        post :create
-        expect(response).to redirect_to(new_user_session_path)
-      end
+      get :new
+      expect(response).to redirect_to(new_user_session_path)
+
+      post :create
+      expect(response).to redirect_to(new_user_session_path)
+
+      get :edit, params: {id: 'fake'}
+      expect(response).to redirect_to(new_user_session_path)
+
+      patch :update, params: {id: 'fake'}
+      expect(response).to redirect_to(new_user_session_path)
+
+      delete :destroy, params: {id: 'fake'}
+      expect(response).to redirect_to(new_user_session_path)
     end
 
   end
+
+
 
   context 'organization users' do
     before do
@@ -43,10 +40,27 @@ RSpec.describe RegionsController, type: :controller do
     it 'redirects to the dashboard url' do
       get :index
       expect(response).to redirect_to(dashboard_url)
+
+      get :show, params: {id: 'fake'}
+      expect(response).to redirect_to(dashboard_url)
+
+      get :new
+      expect(response).to redirect_to(dashboard_url)
+
+      post :create
+      expect(response).to redirect_to(dashboard_url)
+
+      get :edit, params: {id: 'fake'}
+      expect(response).to redirect_to(dashboard_url)
+
+      patch :update, params: {id: 'fake'}
+      expect(response).to redirect_to(dashboard_url)
+
+      delete :destroy, params: {id: 'fake'}
+      expect(response).to redirect_to(dashboard_url)
+
     end
 
   end
-  
- #copy all from above but redirect to dashboard_url
 
 end
