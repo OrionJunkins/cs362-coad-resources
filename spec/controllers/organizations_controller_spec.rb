@@ -40,13 +40,7 @@ RSpec.describe OrganizationsController, type: :controller do
       allow(controller).to receive(:current_user).and_return(organization_user) # Override current_user()
     end
 
-    it 'redirects to the dashboard url' do #duh, organization user can view organizations. Run app and explore org user access
-
-      #get :new
-      #expect(response).to redirect_to(dashboard_url) # Fails
-
-      #post :create
-      #expect(response).to redirect_to(dashboard_url) # Fails
+    it 'redirects to the dashboard url' do 
 
       patch :update, params: {id: 'fake'}
       expect(response).to redirect_to(dashboard_url)
