@@ -13,4 +13,8 @@ FactoryBot.define do
     title { 'Fake Title' }
     transportation { :yes }
   end
+
+  trait :unapproved do
+    status {:submitted}
+  end
 end
