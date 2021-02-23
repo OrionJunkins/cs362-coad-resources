@@ -3,7 +3,6 @@ FactoryBot.define do
     sequence(:email) { |i| "user#{i}@example.com" }
     password {'password'}
     password_confirmation {'password'}
-    encrypted_password {'password'}
     reset_password_token {'token'}
     confirmation_token {'token'}
     unconfirmed_email {'unconfirmed@example.com'}
