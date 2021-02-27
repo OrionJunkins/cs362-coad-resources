@@ -12,4 +12,3 @@ RSpec.describe 'Viewing regions', type: :feature do
   end
 
 end
- 
