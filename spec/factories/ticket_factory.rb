@@ -1,7 +1,7 @@
 FactoryBot.define do 
   factory :ticket do 
     name {'Fake Ticket'}
-    description {'Fake Description'}
+    sequence(:description) { |i| "Fake Description #{i}" }
     phone {'+1541-555-5555'}
     closed { false }
     closed_at { nil }
