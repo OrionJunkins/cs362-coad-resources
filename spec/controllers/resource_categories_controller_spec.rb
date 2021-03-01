@@ -37,9 +37,10 @@ RSpec.describe ResourceCategoriesController, type: :controller do
 
   context 'organization users' do
     before do
-      organization_user = build(:user, :organization)
+      organization_user = double()
+      allow(organization_user).to receive(:admin?).and_return(false)
       allow(request.env['warden']).to receive(:authenticate!).and_return(organization_user)
-      allow(controller).to receive(:current_user).and_return(organization_user) # Override current_user()
+      allow(controller).to receive(:current_user).and_return(organization_user)
     end
 
     it 'redirects to the dashboard url' do

@@ -63,10 +63,18 @@ RSpec.describe OrganizationsController, type: :controller do
   context 'General organization users with an unapproved organization: ' do
 
     before do
-      organization_user = build(:user, :organization)
+      organization_user = double()
+      allow(organization_user).to receive(:admin?).and_return(false)
       allow(request.env['warden']).to receive(:authenticate!).and_return(organization_user)
-      allow(controller).to receive(:current_user).and_return(organization_user) # Override current_user()
-      organization_user.organization = build(:organization, :unapproved)
+      allow(controller).to receive(:current_user).and_return(organization_user)
+
+      test_organization = double()
+      allow(test_organization).to receive(:nil?).and_return(false)
+      allow(test_organization).to receive(:status?).and_return(:unapproved)
+
+      allow(organization_user).to receive(:organization).and_return(test_organization)
+
+      allow(organization_user).to receive(:organization?).and_return(true)
     end
 
     it 'redirects to the dashboard url' do 
@@ -102,9 +110,11 @@ RSpec.describe OrganizationsController, type: :controller do
   context 'admin user' do
 
     before do
-      admin_user = build(:user, :admin)
+      admin_user = double()
+      allow(admin_user).to receive(:admin?).and_return(true)
       allow(request.env['warden']).to receive(:authenticate!).and_return(admin_user)
-      allow(controller).to receive(:current_user).and_return(admin_user) # Override current_user()
+      allow(controller).to receive(:current_user).and_return(admin_user)
+      allow(admin_user).to receive(:organization?).and_return(false)
     end
 
     it 'redirects to the dashboard url' do 
