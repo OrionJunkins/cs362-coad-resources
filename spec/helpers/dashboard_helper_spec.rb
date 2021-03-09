@@ -33,7 +33,7 @@ RSpec.describe DashboardHelper, type: :helper do
     end
 
     context 'organization users with an unsubmitted, approved organization' do
-      it 'returns organization_submitted_dashboard' do
+      it 'returns organization_approved_dashboard' do
         user = double()
         organization = double()
         allow(user).to receive(:admin?) {false}
@@ -41,6 +41,18 @@ RSpec.describe DashboardHelper, type: :helper do
         allow(organization).to receive(:submitted?) {false}
         allow(organization).to receive(:approved?) {true}
         expect(dashboard_for(user)).to eq('organization_approved_dashboard')
+      end
+    end
+
+    context 'organization users with an unsubmitted, unapproved organization' do
+      it 'returns create_application_dashboard' do
+        user = double()
+        organization = double()
+        allow(user).to receive(:admin?) {false}
+        allow(user).to receive(:organization) {organization}
+        allow(organization).to receive(:submitted?) {false}
+        allow(organization).to receive(:approved?) {false}
+        expect(dashboard_for(user)).to eq('create_application_dashboard')
       end
     end
     
