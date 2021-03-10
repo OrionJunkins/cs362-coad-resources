@@ -14,4 +14,9 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+  def show_screenshot(width = 640)
+    print "\033]1337;File=;inline=1;width=#{width}px:"
+    print page.driver.render_base64
+    print "\a\n"
+  end
 end
