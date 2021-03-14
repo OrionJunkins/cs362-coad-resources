@@ -9,8 +9,8 @@ FactoryBot.define do
     role {1}
   end
 
-  trait :organization do
-    role {'organizations'}
+  trait :with_organization do
+    role {'organization'}
     organization
   end
   
