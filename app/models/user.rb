@@ -1,4 +1,5 @@
 # Account for a user of the site
+# May be an admin user with full access, or a more limited organization level user
 class User < ApplicationRecord
 
   enum role: [:admin, :organization]

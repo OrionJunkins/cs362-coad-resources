@@ -1,4 +1,4 @@
-# A single request for aid. Lots of attributes.
+# A single request for aid submitted by a public user which will ultimatly be captured and completed by an organization.
 class Ticket < ApplicationRecord
 
   belongs_to :region

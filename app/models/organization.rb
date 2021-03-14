@@ -1,4 +1,4 @@
-# An organization which is able to offer help
+# An organization which is able to offer help by capturing tickets to serve the public
 class Organization < ApplicationRecord
 
   attr_accessor :agreement_one, :agreement_two, :agreement_three, :agreement_four, :agreement_five, :agreement_six, :agreement_seven, :agreement_eight

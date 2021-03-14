@@ -1,4 +1,4 @@
-# Categories may be associated with a ticket or with an organization
+# Resource Categories organize tickets and organizations to help requests get met efficiently by the best organization for the job
 class ResourceCategory < ApplicationRecord
 
   has_and_belongs_to_many :organizations
